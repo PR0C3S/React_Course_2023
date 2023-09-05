@@ -36,7 +36,7 @@ export default function Weather({
             <Col xs={4}>
               <ThermostatIcon fontSize="large" />
               <h5>Feels Like</h5>
-              <h5>{feelsLike.toFixed(2)} °C</h5>
+              <h5>{feelsLike.toFixed(0)} °C</h5>
             </Col>
             <Col xs={4}>
               <SpeedIcon fontSize="large" />

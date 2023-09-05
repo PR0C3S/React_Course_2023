@@ -19,7 +19,7 @@ function App() {
       {!isLoading && !error && data && (
         <Weather
           location={data.location}
-          weather={data.weather?.main}
+          weather={data.weather}
           temperature={data.temperature}
           windSpeed={data.windSpeed}
           feelsLike={data.feelsLike}
