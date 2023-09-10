@@ -4,8 +4,8 @@ import Header from "./Components/Header";
 import Loader from "./Components/Loader";
 import Search from "./Components/Search";
 import Weather from "./Components/Weather";
-import Error from "./Components/Error";
 import { useFetchData } from "./Hooks/useFetchData";
+import Message from "./Components/Message";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -27,7 +27,10 @@ function App() {
           humidity={data.humidity}
         />
       )}
-      {error && <Error message={error} />}
+      {!isLoading && !error && !data && (
+        <Message message="Search a country/city to start" color="primary" />
+      )}
+      {error && <Message message={error} color="danger" />}
     </div>
   );
 }
