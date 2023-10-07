@@ -1,89 +1,16 @@
-import { combineReducers, createStore } from "redux";
-
-const initialStateAccount = {
-  balance: 0,
-  loan: 0,
-  loanPurpose: "",
-};
-
-const initialStateCustomer = {
-  fullName: "",
-  nationalID: "",
-  createdAt: "",
-};
-
-function accountReducer(state = initialStateAccount, action) {
-  switch (action.type) {
-    case "account/deposit":
-      return { ...state, balance: state.balance + action.payload };
-
-    case "account/withdraw":
-      return { ...state, balance: state.balance - action.payload };
-
-    case "account/requestLoan":
-      if (state.loan > 0) return state;
-      return {
-        ...state,
-        balance: state.balance + action.payload.amount,
-        loan: action.payload.amount,
-        loanPurpose: action.payload.purpose,
-      };
-
-    case "account/payLoan":
-      return {
-        ...state,
-        loan: 0,
-        loanPurpose: "",
-        balance: state.balance - state.loan,
-      };
-    default:
-      return state;
-  }
-}
-
-function customerReducer(state = initialStateCustomer, action) {
-  switch (action.type) {
-    case "customer/createCustomer":
-      return {
-        ...state,
-        fullName: action.payload.fullName,
-        nationalID: action.payLoad.nationalID,
-        createdAt: action.payLoad.createdAt,
-      };
-    case "customer/updateName":
-      return { ...state, fullName: action.payLoad };
-
-    default:
-      return state;
-  }
-}
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import thunk from "redux-thunk";
+import accountReducer from "./features/accounts/AccountSlice";
+import customerReducer from "./features/customers/customerSlice";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const rootReducer = combineReducers({
   account: accountReducer,
   customer: customerReducer,
 });
 
-const store = createStore(rootReducer);
-
-function deposit(amount) {
-  return { type: "account/deposit", payload: amount };
-}
-function withdraw(amount) {
-  return { type: "account/withdraw", payload: amount };
-}
-function requestLoan(amount, purpose) {
-  return { type: "account/requestLoan", payload: { amount, purpose } };
-}
-function payLoan() {
-  return { type: "account/payLoan" };
-}
-function createCustomer(fullName, nationalID) {
-  return {
-    type: "customer/createCustomer",
-    payLoad: { fullName, nationalID, createdAt: new Date().toISOString() },
-  };
-}
-
-function updateName(fullName) {
-  return { type: "account/updateName", payload: fullName };
-}
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
+export default store;
