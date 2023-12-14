@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import React from "react";
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 import {
   HiOutlineCalendarDays,
   HiOutlineCog6Tooth,
@@ -54,7 +53,7 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-export default function MainNav() {
+function MainNav() {
   return (
     <nav>
       <NavList>
@@ -64,7 +63,6 @@ export default function MainNav() {
             <span>Home</span>
           </StyledNavLink>
         </li>
-
         <li>
           <StyledNavLink to="/bookings">
             <HiOutlineCalendarDays />
@@ -93,3 +91,5 @@ export default function MainNav() {
     </nav>
   );
 }
+
+export default MainNav;

@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import styled from "styled-components";
 import { getCabins } from "../../services/apiCabins";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
@@ -29,7 +28,7 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
-export default function CabinTable() {
+function CabinTable() {
   const {
     isLoading,
     data: cabins,
@@ -52,8 +51,10 @@ export default function CabinTable() {
         <div></div>
       </TableHeader>
       {cabins.map((cabin) => (
-        <CabinRow key={cabin.id} cabin={cabin} />
+        <CabinRow cabin={cabin} key={cabin.id} />
       ))}
     </Table>
   );
 }
+
+export default CabinTable;
