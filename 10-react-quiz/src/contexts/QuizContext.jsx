@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
+import { QUESTIONS_DATA } from "../../data/data";
 
 const QuizContext = createContext();
 const initialState = {
@@ -29,6 +30,7 @@ function reducer(state, action) {
       };
 
     case "newAnswer":
+      // eslint-disable-next-line no-case-declarations
       const question = state.questions.at(state.index);
       return {
         ...state,
@@ -83,10 +85,11 @@ function QuizProvider({ children }) {
   );
 
   useEffect(function () {
-    fetch("http://localhost:9000/questions")
+    /*fetch("http://localhost:9000/questions")
       .then((res) => res.json())
       .then((data) => dispatch({ type: "dataReceived", payload: data }))
-      .catch((err) => dispatch({ type: "dataFailed" }));
+      .catch((err) => dispatch({ type: "dataFailed" }));*/
+    dispatch({ type: "dataReceived", payload: QUESTIONS_DATA });
   }, []);
 
   return (
